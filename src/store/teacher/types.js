@@ -1,0 +1,1 @@
+export const TEACHER_INFO_LIST = 'TEACHER_INFO_LIST'
