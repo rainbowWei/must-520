@@ -1,8 +1,8 @@
 import * as types from './types'
-import server from '@/services/a'
+import server from '@/services/country'
 
 const action = {
-  getInitCountries ({state, commit, rootState}) {
+  getInitCountries({ state, commit, rootState }) {
     try {
       const res = server.getCountry()
       res.then(res => {
@@ -14,6 +14,9 @@ const action = {
     } catch (e) {
       throw new Error(e)
     }
+  },
+  addNumber({ state, commit, rootState }) {
+    commit('xxxx', 3)
   }
 }
 export default action
