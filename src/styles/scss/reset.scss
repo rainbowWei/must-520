@@ -1,0 +1,14 @@
+// 网上找个reset样式的文件
+body, dl, dd, h1, h3, h4, p, form {
+  margin:0;
+}
+ol, li, ul { 
+  margin:0;
+  padding:0;
+}
+button {
+  outline: none;
+  &:hover {
+    cursor: pointer;
+  }
+}
