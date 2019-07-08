@@ -1,17 +1,21 @@
 <template>
   <section>
     <h4 class="bo">{{name}}</h4>
-    <SelfButton type="danger" @click="handleClick" a="123">
+    <SelfButton type="danger" @click="handleClick" size="small">
       <span class="icon iconfont icon-icon-test"></span>
       {{name}}
     </SelfButton>
-    <SelfButton type='success' @click="getTeachersList">获取教师列表</SelfButton>
+    <SelfButton haha=0 type='success' @click="getTeachersList" size="large">获取教师列表</SelfButton>
     <SelfButton @click="addNumber">成功按钮</SelfButton>
     <div>
       <span v-for="province in getProvince" :key="province.label">⭐️{{province.value}} </span>
     </div>
-    <div v-show="teacherList.length">
-      <span v-for="teacher in teacherList" :key="teacher.id">{{teacher.name}}</span>
+    <div class="clearfix" v-show="teacherList.length">
+      <div class="teacher" v-for="teacher in teacherList" :key="teacher.id">
+        <p class="photo"><img :src="teacher.avator" alt="头像"/></p>
+        <p class="name">{{teacher.name}}</p>
+        <p class="register-time">{{teacher.registerDate}}</p>
+      </div>
     </div>
   </section>
 </template>
@@ -60,5 +64,18 @@ export default {
 <style lang="scss" scoped>
   .bo {
     color: $danger-color;
+  }
+  .teacher {
+    float: left;
+  }
+  .photo {
+    margin: 12px 18px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    > img {
+      @include size(120px);
+    }
   }
 </style>

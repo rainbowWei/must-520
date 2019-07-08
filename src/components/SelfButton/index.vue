@@ -1,5 +1,5 @@
 <template>
-  <button :class="['button', 'self-button', typeClass]" @click="handleClick">
+  <button :class="typeClass" @click="handleClick" :size="size || 'normal'">
     <slot>按钮</slot>
   </button>
 </template>
@@ -19,11 +19,11 @@ export default {
     }
   },
   props: {
-    type: String
+    type: String,
+    size: String
   },
   created () {
-    console.log(this.type, '99999')
-    this.typeClass = `${TYPES[this.type]}-button`
+    this.typeClass = `self-btn self-btn-${TYPES[this.type ? this.type : 'primary']}`
   },
   mounted () {
     console.log(this.type, '90909')
@@ -37,39 +37,63 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.button {
-  color: $primary-color;
-  border-color: $primary-color;
+@mixin buttonStyle ($c, $bc,  $bgc: transparent) {
+  color: $c;
+  border-color: $bc;
+  background-color: $bgc;
+}
+@mixin buttonType ($type, $theme-color, $theme-hcolor) {
+  @if $type == fill {
+    @include buttonStyle(#fff, $theme-color, $theme-color);
+    &:hover {
+      @include buttonStyle(#fff, $theme-hcolor, $theme-hcolor);
+    }
+  } @else {
+    @include buttonStyle($theme-color, $theme-color);
+    &:hover {
+      @include buttonStyle($theme-hcolor, $theme-hcolor);
+    }
+  }
+}
+@mixin buttonSize ($size) {
+  @if $size == large {
+    margin: 12px 20px;
+    font-size: 20px;
+    padding: 8px 14px;
+    min-width: 160px;
+  } @else if $size == small {
+    font-size: 14px;
+    min-width: 100px;
+  } @else {
+    font-size: 16px;
+    min-width: 120px;
+  }
+}
+$btn: #{$prefix}-btn;
+.#{$btn} {
   padding: 8px 10px;
   border-radius: 4px;
   border-width: 1px;
   border-style: solid;
   font-size: 16px;
   user-select: none;
-  &:hover {
-    color: $primary-hcolor;
-    border-color: $primary-hcolor;
-  }
-  &.self-button {
-    min-width: 120px;
-    font-size: 16px;
-    margin: 4px 8px;
-  }
-  &.danger-button {
-    color: $danger-color;
-    border-color: $danger-color;
-    &:hover {
-      color: $danger-hcolor;
-      border-color: $danger-hcolor;
-    }
-  }
-  &.success-button {
-    color: $success-color;
-    border-color: $success-color;
-    &:hover {
-      color: $success-hcolor;
-      border-color: $success-hcolor;
-    }
-  }
+}
+.#{$btn}-primary {
+  @include buttonType(hollow, $primary-color, $primary-hcolor)
+}
+.#{$btn}-danger {
+  @include buttonType(hollow, $danger-color, $danger-hcolor)
+}
+.#{$btn}-success {
+  @include buttonType(fill, $success-color, $success-hcolor);
+}
+.#{$btn}[size=small] {
+  @include buttonSize(small);
+}
+.#{$btn}[size=large] {
+  @include buttonSize(large);
+}
+.#{$btn}[size=normal] {
+  @include buttonSize(normal);
 }
 </style>
